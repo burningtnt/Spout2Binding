@@ -36,13 +36,17 @@ typedef void* SpoutHandle;
 // -----------------------------------------------------------------------
 // spCreateSpout
 //
-// Creates a Spout sender object and returns an opaque handle.
+// Creates a Spout sender object with the given name and returns an
+// opaque handle.
 // The returned handle must be passed to spSendFrameBufferObject and
 // eventually to spReleaseSpout for cleanup.
 //
+//  sendername - Null-terminated UTF-8 string for the sender name.
+//               If NULL or empty, the executable name is used.
+//
 // Returns: a non-null SpoutHandle on success, NULL on failure.
 // -----------------------------------------------------------------------
-SPOUTBINDING_API SpoutHandle spCreateSpout(void);
+SPOUTBINDING_API SpoutHandle spCreateSpout(const char* sendername);
 
 // -----------------------------------------------------------------------
 // spSendFrameBufferObject

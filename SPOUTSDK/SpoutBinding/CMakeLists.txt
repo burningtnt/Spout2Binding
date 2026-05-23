@@ -31,6 +31,13 @@ target_compile_definitions(SpoutBinding PRIVATE SPOUTBINDING_EXPORTS)
 # (OpenGL, DirectX, shared memory, etc.).
 target_link_libraries(SpoutBinding PUBLIC Spout_static)
 
+# Statically link C++ and GCC runtimes to avoid dependency on
+# libstdc++-6.dll and libgcc_s_seh-1.dll which are not guaranteed
+# to be present on Windows (especially for Java FFM loading).
+if(MINGW)
+	target_link_options(SpoutBinding PRIVATE -static-libstdc++ -static-libgcc)
+endif()
+
 # Include directories for consuming code:
 #   BUILD_INTERFACE  - consumers add SpoutBinding/ to their include path
 #   INSTALL_INTERFACE - installed location under CMAKE_INSTALL_INCLUDEDIR

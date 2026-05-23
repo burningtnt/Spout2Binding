@@ -112,13 +112,20 @@ sudo pacman -S mingw-w64-gcc cmake make
 
 #### 步骤 2：配置 CMake（使用预置工具链文件）
 
-项目已包含 MinGW x86（32-bit）工具链文件 `cmake/toolchain-mingw-w32.cmake`：
+项目包含两个 MinGW 工具链文件：
+
+| 架构 | 工具链文件 | 编译器 | 输出 |
+|---|---|---|---|
+| **x86-64（64-bit）** | `cmake/toolchain-mingw-w64.cmake` | `x86_64-w64-mingw32-g++` | 推荐 |
+| x86（32-bit） | `cmake/toolchain-mingw-w32.cmake` | `i686-w64-mingw32-g++` | 仅限旧系统 |
+
+编译 **64-bit** 版本（推荐）：
 
 ```bash
 cd /path/to/Spout2
 rm -rf build
 cmake -B build \
-    -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-mingw-w32.cmake \
+    -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-mingw-w64.cmake \
     -DSPOUT_BUILD_BINDING=ON \
     -DSPOUT_BUILD_LIBRARY=OFF \
     -DSPOUT_BUILD_SPOUTDX=OFF \
@@ -135,7 +142,7 @@ cmake --build build --target SpoutBinding --verbose
 
 ```
 build/bin/
-└── libSpoutBinding.dll          ← 运行时 DLL（~800 KB）
+└── libSpoutBinding.dll          ← 运行时 DLL（~920 KB, x86-64 PE）
 
 build/lib/
 └── libSpoutBinding.dll.a        ← MinGW 导入库

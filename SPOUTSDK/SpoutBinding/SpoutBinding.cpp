@@ -13,9 +13,9 @@
 #include "../SpoutGL/SpoutSender.h" // sender-only convenience wrapper
 
 // -----------------------------------------------------------------------
-// Create a Spout sender object
+// Create a Spout sender object with a given name
 // -----------------------------------------------------------------------
-SPOUTBINDING_API SpoutHandle spCreateSpout(void)
+SPOUTBINDING_API SpoutHandle spCreateSpout(const char* sendername)
 {
 	// SpoutSender is a sender-only wrapper around the full Spout class.
 	// It exposes only sender-related functions, which is cleaner for this binding.
@@ -23,6 +23,13 @@ SPOUTBINDING_API SpoutHandle spCreateSpout(void)
 	if (!sender) {
 		return nullptr;
 	}
+
+	// Set the sender name.
+	// If sendername is NULL or empty, Spout will use the executable name.
+	if (sendername && sendername[0] != '\0') {
+		sender->SetSenderName(sendername);
+	}
+
 	return static_cast<SpoutHandle>(sender);
 }
 
