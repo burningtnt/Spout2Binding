@@ -51,6 +51,7 @@ OPTION(SPOUT_NO_GLOBAL_WARNING "" ${SPOUT_NO_GLOBAL_WARNING_default})
 OPTION(SPOUT_BUILD_ARM "Build for Windows on ARM" OFF)
 OPTION(SPOUT_BUILD_CMT "For Visual Studio - build /MT to link runtime libraries" ON)
 OPTION(SPOUT_BUILD_LIBRARY "Build C-compatible cross compiler library" ON)
+OPTION(SPOUT_BUILD_BINDING "Build C ABI binding library for Java FFM" OFF)
 OPTION(SPOUT_BUILD_SPOUTDX "Build SpoutDX DirectX 9/11/12 libraries" OFF)
 # Install option check boxes
 OPTION(SKIP_INSTALL_ALL "Install headers and libraries" OFF) # Default do not skip all install
@@ -94,6 +95,10 @@ add_subdirectory(SPOUTSDK/SpoutGL)
 if (SPOUT_BUILD_LIBRARY)
   add_subdirectory(SPOUTSDK/SpoutLibrary)
 endif (SPOUT_BUILD_LIBRARY)
+
+if (SPOUT_BUILD_BINDING)
+  add_subdirectory(SPOUTSDK/SpoutBinding)
+endif (SPOUT_BUILD_BINDING)
 
 if (SPOUT_BUILD_SPOUTDX)
 	add_subdirectory(SPOUTSDK/SpoutDirectX/SpoutDX)
